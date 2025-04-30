@@ -68,7 +68,7 @@ namespace GestionVentasAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<Usuario>> Login(string correo, string clave)
+        public async Task<ActionResult<Usuario>> Login([FromQuery] string correo, [FromQuery] string clave)
         {
             var usuario = await _usuarioService.ValidarUsuarioAsync(correo, clave);
             if (usuario == null)
@@ -77,6 +77,19 @@ namespace GestionVentasAPI.Controllers
             }
             return Ok(usuario);
         }
+
+        [HttpGet("validar")]
+        public async Task<IActionResult> ValidarUsuario([FromQuery] string correo, [FromQuery] string clave)
+        {
+            var usuario = await _usuarioService.ValidarUsuarioAsync(correo, clave);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            return Ok(usuario);
+        }
+
+
     }
 
 

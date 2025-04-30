@@ -37,9 +37,9 @@ namespace GestionVentasAPI.Services
                             {
                                 IDVenta = (int)reader["IDVenta"],
                                 IdUsuario = (int)reader["IdUsuario"],
-                                Fecha = (DateTime)reader["fecha"],
-                                MontoTotal = (decimal)reader["monto_total"],
-                                MetodoPago = reader["metodo_pago"].ToString()
+                                
+                                monto_total = (decimal)reader["monto_total"],
+                                metodo_pago = reader["metodo_pago"].ToString()
                             });
                         }
                     }
@@ -68,9 +68,9 @@ namespace GestionVentasAPI.Services
                             {
                                 IDVenta = (int)reader["IDVenta"],
                                 IdUsuario = (int)reader["IdUsuario"],
-                                Fecha = (DateTime)reader["fecha"],
-                                MontoTotal = (decimal)reader["monto_total"],
-                                MetodoPago = reader["metodo_pago"].ToString()
+                                
+                                monto_total = (decimal)reader["monto_total"],
+                                metodo_pago = reader["metodo_pago"].ToString()
                             };
                         }
                     }
@@ -87,13 +87,14 @@ namespace GestionVentasAPI.Services
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdUsuario", venta.IdUsuario);
-                    cmd.Parameters.AddWithValue("@monto_total", venta.MontoTotal);
-                    cmd.Parameters.AddWithValue("@metodo_pago", venta.MetodoPago);
+                    cmd.Parameters.AddWithValue("@monto_total", venta.monto_total);
+                    cmd.Parameters.AddWithValue("@metodo_pago", venta.metodo_pago);
 
                     await con.OpenAsync();
                     
                     object result = await cmd.ExecuteScalarAsync();
-                    return (int)result; 
+                    return Convert.ToInt32(result);
+
                 }
             }
         }
@@ -107,8 +108,8 @@ namespace GestionVentasAPI.Services
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IDVenta", idVenta);
                     cmd.Parameters.AddWithValue("@IdUsuario", venta.IdUsuario);
-                    cmd.Parameters.AddWithValue("@monto_total", venta.MontoTotal);
-                    cmd.Parameters.AddWithValue("@metodo_pago", venta.MetodoPago);
+                    cmd.Parameters.AddWithValue("@monto_total", venta.monto_total);
+                    cmd.Parameters.AddWithValue("@metodo_pago", venta.metodo_pago);
 
                     await con.OpenAsync();
                     int rowsAffected = await cmd.ExecuteNonQueryAsync();
