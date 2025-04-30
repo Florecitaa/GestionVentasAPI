@@ -97,7 +97,7 @@ namespace GestionVentasAPI.Services
                     cmd.Parameters.AddWithValue("@Rol", usuario.Rol);
                     cmd.Parameters.AddWithValue("@telefono", usuario.Telefono ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@direccion", usuario.Direccion ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@cedula", usuario.Cedula); // Ensure not null
+                    cmd.Parameters.AddWithValue("@cedula", usuario.Cedula); 
 
                     await con.OpenAsync();
                     try
@@ -106,13 +106,13 @@ namespace GestionVentasAPI.Services
                     }
                     catch (SqlException ex)
                     {
-                        if (ex.Number == 2601 || ex.Number == 2627) // Check for duplicate key error numbers
+                        if (ex.Number == 2601 || ex.Number == 2627) 
                         {
-                            throw new DuplicateCedulaException("A user with this Cedula already exists.", ex); //Wrap the exception
+                            throw new DuplicateCedulaException("A user with this Cedula already exists.", ex); 
                         }
                         else
                         {
-                            throw; // Re-throw other SQLExceptions
+                            throw; 
                         }
                     }
                 }
